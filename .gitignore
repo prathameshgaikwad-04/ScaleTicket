@@ -1,0 +1,15 @@
+# Java
+target/
+*.class
+*.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Docker
+docker-data/
+
+# Secrets
+.env
