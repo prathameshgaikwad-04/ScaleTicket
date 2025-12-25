@@ -9,9 +9,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    # This tells GitHub to run all 'run' steps inside the booking-service folder
+    defaults:
+      run:
+        working-directory: ./booking-service
 
     services:
-      # Start Postgres for testing
       postgres:
         image: postgres:15
         env:
@@ -26,7 +30,6 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-      # Start Redis for locking tests
       redis:
         image: redis:7
         ports:
@@ -43,7 +46,8 @@ jobs:
         cache: maven
 
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      # Note: We removed --file pom.xml because working-directory handles it now
+      run: mvn -B package 
 
     - name: Run Tests
       run: mvn test
